@@ -1,14 +1,10 @@
-# README.md
+# README
 
 ## Accessibility Improvements for Accordion Component
 
-This document outlines the accessibility enhancements made to the accordion component, following ARIA best practices and addressing the missing elements in keyboard interaction and ARIA attributes.
 
----
 
-### Questions Answered:
-
-#### 1. What is the keyboard interaction missing?
+### 1. What is the keyboard interaction missing?
 
 **Missing Keyboard Interaction for Enter and Spacebar Keys**
 
@@ -44,7 +40,7 @@ trigger.addEventListener('keydown', (event) => {
 
 ---
 
-#### 2. What is the ARIA missing?
+### 2. What is the ARIA missing?
 
 **a. Missing `role="button"` on Trigger Elements**
 
