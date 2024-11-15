@@ -1,16 +1,18 @@
-# README
+# README.md
 
-## Accessibility Improvements for Accordion Widgets
+## Accessible Accordion Component
 
 
+
+---
 
 ### 1. What is the keyboard interaction missing?
 
 **Missing Keyboard Interaction for Enter and Spacebar Keys**
 
-- **Issue**: The accordion trigger buttons were not responding to the **Enter** and **Spacebar** keys when focused. According to accessibility standards, users should be able to activate buttons using these keys.
+- **Issue**: The accordion trigger buttons do not respond to the **Enter** and **Spacebar** keys when focused. According to accessibility standards, users should be able to activate buttons using these keys.
 
-- **Solution**: Added event handling for the **Enter** and **Spacebar** keys in the `keydown` event listener. Pressing these keys now toggles the associated accordion panel.
+- **Solution**: Add event handling for the **Enter** and **Spacebar** keys in the `keydown` event listener. Pressing these keys will toggle the associated accordion panel.
 
 **Implementation Details**:
 
@@ -23,7 +25,29 @@ trigger.addEventListener('keydown', (event) => {
   let newTrigger;
 
   switch (key) {
-    // Existing cases for arrow keys, Home, and End...
+    case 'ArrowDown':
+    case 'Down':
+      event.preventDefault();
+      newTrigger = getNextTrigger(trigger);
+      newTrigger.focus();
+      break;
+
+    case 'ArrowUp':
+    case 'Up':
+      event.preventDefault();
+      newTrigger = getPreviousTrigger(trigger);
+      newTrigger.focus();
+      break;
+
+    case 'Home':
+      event.preventDefault();
+      accordionTriggers[0].focus();
+      break;
+
+    case 'End':
+      event.preventDefault();
+      accordionTriggers[accordionTriggers.length - 1].focus();
+      break;
 
     case 'Enter':
     case ' ':
@@ -40,40 +64,28 @@ trigger.addEventListener('keydown', (event) => {
 
 ---
 
-### 2. What is the ARIA missing?
+#### 2. What is the ARIA missing?
 
-**a. Missing `role="button"` on Trigger Elements**
+**a. Incorrect Use of the `hidden` Attribute**
 
-- **Issue**: Although `<button>` elements are used, explicitly specifying `role="button"` can enhance compatibility with some assistive technologies.
+- **Issue**: Using the `hidden` attribute can prevent some screen readers from detecting content changes when panels are expanded or collapsed.
 
-- **Solution**: Added `role="button"` to each accordion trigger button.
+- **Solution**: Replace the `hidden` attribute with `aria-hidden="true"` when panels are collapsed and `aria-hidden="false"` when expanded. This ensures that screen readers are aware of content visibility changes.
 
-**b. Incorrect Use of `hidden` Attribute**
+**b. Missing Handling of `aria-expanded` Attribute**
 
-- **Issue**: Using the `hidden` attribute can prevent screen readers from detecting content changes when panels are expanded or collapsed.
+- **Issue**: The `aria-expanded` attribute on trigger buttons may not accurately reflect the current state of the accordion panels.
 
-- **Solution**: Replaced the `hidden` attribute with `aria-hidden="true"` when panels are collapsed and `aria-hidden="false"` when expanded. This ensures that screen readers are aware of content visibility changes.
-
-**c. Missing Handling of `aria-expanded`**
-
-- **Issue**: The `aria-expanded` attribute on trigger buttons was not being updated to reflect the current state of the accordion panels.
-
-- **Solution**: Ensured that the `aria-expanded` attribute is toggled between `true` and `false` when panels are expanded or collapsed.
-
-**d. Ensuring Unique IDs and Proper Associations**
-
-- **Issue**: Proper ARIA requires unique IDs for `aria-controls` and `aria-labelledby` to correctly associate triggers and panels.
-
-- **Solution**: Verified that all IDs are unique and that `aria-controls` on triggers correctly reference their associated panel IDs, while panels use `aria-labelledby` to reference their trigger IDs.
+- **Solution**: Ensure that the `aria-expanded` attribute is updated to `true` when the panel is expanded and `false` when collapsed.
 
 **Implementation Details**:
 
-In the HTML file (`index.html`), update the accordion structure:
+Update the HTML file (`index.html`):
 
 ```html
 <!-- Accordion Trigger -->
 <h3>
-  <button id="accordion1id" class="accordion-trigger" role="button" aria-expanded="false" aria-controls="panel1id">
+  <button id="accordion1id" class="accordion-trigger" aria-expanded="false" aria-controls="panel1id">
     Accordion Header 1
   </button>
 </h3>
@@ -84,22 +96,22 @@ In the HTML file (`index.html`), update the accordion structure:
 </div>
 ```
 
-In the JavaScript file (`accordion.js`), update the click event listener:
+Update the JavaScript file (`accordion.js`):
 
 ```javascript
 // Click event listener to toggle the associated accordion panel
 trigger.addEventListener('click', (event) => {
-  // Get the current state
+  // Get the current value of 'aria-expanded' attribute
   const expanded = trigger.getAttribute('aria-expanded') === 'true';
 
-  // Toggle aria-expanded on trigger
+  // Toggle the 'aria-expanded' attribute value
   trigger.setAttribute('aria-expanded', !expanded);
 
-  // Get the associated panel
+  // Get the ID of the associated accordion panel from 'aria-controls' attribute
   const panelId = trigger.getAttribute('aria-controls');
   const panel = document.getElementById(panelId);
 
-  // Toggle aria-hidden on panel
+  // Toggle the 'aria-hidden' attribute on the panel
   if (expanded) {
     panel.setAttribute('aria-hidden', 'true');
   } else {
@@ -108,7 +120,7 @@ trigger.addEventListener('click', (event) => {
 });
 ```
 
-In the CSS file (`accordion.css`), adjust the display of panels based on `aria-hidden`:
+Update the CSS file (`accordion.css`):
 
 ```css
 /* Show panel when aria-hidden is false */
@@ -124,15 +136,11 @@ In the CSS file (`accordion.css`), adjust the display of panels based on `aria-h
 
 ---
 
+### Summary of Changes
 
----
+- **Keyboard Interaction**: Added support for **Enter** and **Spacebar** keys to toggle accordion panels.
 
-## Summary
-
-- **Keyboard Interaction**: Added support for Enter and Spacebar keys to toggle accordion panels.
 - **ARIA Enhancements**:
-  - Added `role="button"` to trigger elements.
-  - Replaced `hidden` attribute with `aria-hidden` on panels.
+  - Replaced the `hidden` attribute with `aria-hidden` on panels.
   - Ensured `aria-expanded` is correctly updated on triggers.
-  - Verified unique IDs and proper associations between triggers and panels.
 
