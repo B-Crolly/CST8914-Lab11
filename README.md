@@ -1,6 +1,6 @@
 # README
 
-## Accessibility Improvements for Accordion Component
+## Accessibility Improvements for Accordion Widgets
 
 
 
