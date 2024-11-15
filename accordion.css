@@ -10,7 +10,7 @@
   width: 100%;
   background-color: whitesmoke;
   border: none;
-  outline: none;
+  /* Removed outline: none; */
   text-align: left;
   padding: 15px 20px;
   font-size: 18px;
@@ -20,6 +20,12 @@
   /* Remove default button styles */
   appearance: none;
   -webkit-appearance: none;
+}
+
+/* Focus state with thicker green outline */
+.accordion-trigger:focus {
+  outline: 4px solid green; /* Thicker green focus outline */
+  outline-offset: 2px;
 }
 
 /* FontAwesome icons for the trigger buttons */
@@ -45,10 +51,14 @@
 .accordion-content {
   background-color: white;
   padding: 0 20px;
-  /* The 'hidden' attribute will handle the display */
 }
 
-/* Ensure that elements with 'hidden' attribute are not displayed */
-[hidden] {
+/* Hide panel when aria-hidden is true */
+.accordion-content[aria-hidden="true"] {
   display: none;
-}   
+}
+
+/* Show panel when aria-hidden is false */
+.accordion-content[aria-hidden="false"] {
+  display: block;
+}
