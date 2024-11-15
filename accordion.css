@@ -1,17 +1,12 @@
-/* body {
-	background-color: #6DC4F4;
-}h1 { 
-     color:white;
- 
-} */
-
+/* Container styling */
 .container {
   width: 80%;
   max-width: 600px;
   margin: 50px auto;
 }
 
-button.accordion {
+/* Accordion trigger button styling */
+.accordion-trigger {
   width: 100%;
   background-color: whitesmoke;
   border: none;
@@ -22,31 +17,38 @@ button.accordion {
   color: #333;
   cursor: pointer;
   transition: background-color 0.2s linear;
+  /* Remove default button styles */
+  appearance: none;
+  -webkit-appearance: none;
 }
 
-button.accordion:after {
+/* FontAwesome icons for the trigger buttons */
+.accordion-trigger:after {
   font-family: FontAwesome;
-  content: "\f150";
-  font-family: "fontawesome";
+  content: "\f150"; /* Unicode for FontAwesome 'plus' icon */
   font-size: 18px;
   float: right;
 }
 
-button.accordion.is-open:after {
-  content: "\f151";
+/* Change icon when accordion is expanded */
+.accordion-trigger[aria-expanded="true"]:after {
+  content: "\f151"; /* Unicode for FontAwesome 'minus' icon */
 }
 
-button.accordion:hover,
-button.accordion.is-open {
+/* Hover and focus states */
+.accordion-trigger:hover,
+.accordion-trigger:focus {
   background-color: #ddd;
 }
 
+/* Accordion panel content styling */
 .accordion-content {
   background-color: white;
-  border-left: 1px solid whitesmoke;
-  border-right: 1px solid whitesmoke;
   padding: 0 20px;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.2s ease-in-out;
+  /* The 'hidden' attribute will handle the display */
 }
+
+/* Ensure that elements with 'hidden' attribute are not displayed */
+[hidden] {
+  display: none;
+}   
