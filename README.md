@@ -2,7 +2,6 @@
 
 # Accessible Accordion Component
 
-
 ## Questions Answered with Code Changes:
 
 ### 1. What is the keyboard interaction missing?
@@ -13,7 +12,7 @@
 
 - **Code Changes Made**:
 
-  In the `accordion.js` file, we updated the `keydown` event listener to include cases for the Enter and Spacebar keys:
+  In the `accordion.js` file, I updated the `keydown` event listener to include cases for the Enter and Spacebar keys:
 
   ```javascript
   // Keydown event listener to manage keyboard interactions
@@ -43,7 +42,7 @@
 
 - **Code Changes Made**:
 
-  In the `accordion.css` file, we **removed** the `outline: none;` property from the `.accordion-trigger` class and **added** a custom focus style:
+  In the `accordion.css` file, I **removed** the `outline: none;` property from the `.accordion-trigger` class and **added** a custom focus style:
 
   ```css
   .accordion-trigger {
@@ -77,7 +76,8 @@
   - Added `aria-labelledby="buttonID"` to each panel `<div>`, referencing its trigger button's `id`.
   - Provides an accessible name for the panel by linking it to its trigger.
 
-By implementing these ARIA attributes, we improved the accessibility of the accordion component, ensuring that assistive technologies can accurately convey the state and relationships of the accordion elements to users.
+By implementing these ARIA attributes, I improved the accessibility of the accordion component, ensuring that assistive technologies can accurately convey the state and relationships of the accordion elements to users.
+
 - **Code Changes Made**:
 
   ```html
@@ -93,7 +93,7 @@ By implementing these ARIA attributes, we improved the accessibility of the acco
   </div>
   ```
 
-  In the `accordion.js` file, we **updated** the click event listener to toggle the `aria-hidden` attribute on the panels:
+  In the `accordion.js` file, I **updated** the click event listener to toggle the `aria-hidden` attribute on the panels:
 
   ```javascript
   // Click event listener to toggle the associated accordion panel
@@ -117,7 +117,7 @@ By implementing these ARIA attributes, we improved the accessibility of the acco
   });
   ```
 
-  In the `accordion.css` file, we **adjusted** the display of panels based on the `aria-hidden` attribute:
+  In the `accordion.css` file, I **adjusted** the display of panels based on the `aria-hidden` attribute:
 
   ```css
   /* Show panel when aria-hidden is false */
@@ -130,7 +130,3 @@ By implementing these ARIA attributes, we improved the accessibility of the acco
     display: none;
   }
   ```
-
----
----
-
