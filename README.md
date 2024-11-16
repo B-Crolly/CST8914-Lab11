@@ -61,13 +61,24 @@
 
 ### 2. What is the ARIA missing?
 
-**Incorrect Use of `hidden` Attribute and Missing `aria-hidden`**
+- **Replaced `hidden` with `aria-hidden` on Panels**:
+  - Added `aria-hidden="true"` to the accordion panel `<div>` elements.
+  - This makes the panels' visibility state known to assistive technologies.
 
-- **Issue**: The accordion panels use the `hidden` attribute to control visibility, which may not be correctly interpreted by assistive technologies. Also, `aria-hidden` is missing.
+- **Updated `aria-expanded` on Trigger Buttons**:
+  - Ensured each `<button>` has `aria-expanded` set to `"true"` when its panel is expanded and `"false"` when collapsed.
+  - This indicates the toggle state to users of assistive technologies.
 
+- **Added `aria-controls` to Trigger Buttons**:
+  - Included `aria-controls="panelID"` on each trigger `<button>`, referencing its associated panel's `id`.
+  - Establishes a clear relationship between the trigger and its controlled panel.
+
+- **Added `aria-labelledby` to Panels**:
+  - Added `aria-labelledby="buttonID"` to each panel `<div>`, referencing its trigger button's `id`.
+  - Provides an accessible name for the panel by linking it to its trigger.
+
+By implementing these ARIA attributes, we improved the accessibility of the accordion component, ensuring that assistive technologies can accurately convey the state and relationships of the accordion elements to users.
 - **Code Changes Made**:
-
-  In the `index.html` file, we **replaced** the `hidden` attribute with `aria-hidden="true"` on the accordion panels:
 
   ```html
   <!-- Accordion panel with ARIA attributes -->
@@ -121,18 +132,5 @@
   ```
 
 ---
-
-### Summary of Changes Made
-
-- **Keyboard Interaction**:
-
-  - **Added** handling for **Enter** and **Spacebar** keys in the `keydown` event listener to allow activation of the accordion triggers.
-  - **Restored** the focus indicator by removing `outline: none;` and **added** a custom focus style for better visibility.
-
-- **ARIA Attributes**:
-
-  - **Replaced** the `hidden` attribute with `aria-hidden` on the accordion panels to improve compatibility with assistive technologies.
-  - **Ensured** that the `aria-expanded` attribute on the trigger buttons is updated when panels are toggled.
-
 ---
 
